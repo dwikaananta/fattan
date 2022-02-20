@@ -16,6 +16,7 @@ const Guru = (props) => {
             {santri.data && santri.data.length > 0 ? (
                 <>
                     <Table>
+                        {/*  */}
                         <Thead>
                             <tr>
                                 <th>No</th>
