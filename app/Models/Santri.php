@@ -18,6 +18,7 @@ class Santri extends Authenticatable
         'nama',
         'nik',
         'kk',
+        'tempat_lahir',
         'tanggal_lahir',
         'jenis_kelamin',
         'nama_ortu',

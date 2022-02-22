@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nama', 100);
             $table->string('nik', 30)->unique();
             $table->string('kk', 30);
+            $table->string('tempat_lahir', 30)->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->boolean('jenis_kelamin');
             $table->string('nama_ortu', 100);

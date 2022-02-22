@@ -1,3 +1,4 @@
+import { Link, usePage } from "@inertiajs/inertia-react";
 import React from "react";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../Storages/auth";
@@ -7,6 +8,7 @@ const Topbar = () => {
     const [toggle, setToggle] = React.useContext(ToggleContext);
 
     const user = useRecoilValue(userState);
+    const { auth } = usePage().props;
 
     return (
         <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -300,7 +302,9 @@ const Topbar = () => {
                         aria-expanded="false"
                     >
                         <span className="mr-2 d-none d-lg-inline text-gray-600 small">
-                            {user.name || "-"}
+                            {auth.user && "Oprator - " + auth.user.name}
+                            {auth.guru && "Guru - " + auth.guru.nama}
+                            {auth.santri && "Santri - " + auth.santri.nama}
                         </span>
                         <i className="fa fa-user" />
                         {/* <img
@@ -326,15 +330,15 @@ const Topbar = () => {
                             Activity Log
                         </a>
                         <div className="dropdown-divider" />
-                        <a
+                        <Link
                             className="dropdown-item"
-                            href="#"
-                            data-toggle="modal"
-                            data-target="#logoutModal"
+                            href="/logout"
+                            method="POST"
+                            as="button"
                         >
                             <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" />
                             Logout
-                        </a>
+                        </Link>
                     </div>
                 </li>
             </ul>

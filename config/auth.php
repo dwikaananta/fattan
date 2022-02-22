@@ -39,14 +39,10 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
-        ],
-        
-        'guru' => [
+        ], 'guru' => [
             'driver' => 'session',
             'provider' => 'guru',
-        ],
-        
-        'santri' => [
+        ], 'santri' => [
             'driver' => 'session',
             'provider' => 'santri',
         ]
@@ -73,16 +69,12 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
-        ],
-
-        'guru' => [
-            'driver' => 'database',
-            'table' => App\Models\Guru::class,
-        ],
-
-        'santri' => [
-            'driver' => 'database',
-            'table' => App\Models\Santri::class,
+        ], 'guru' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Guru::class,
+        ], 'santri' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Santri::class,
         ],
     ],
 
@@ -104,6 +96,16 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ], 'guru' => [
+            'provider' => 'guru',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ], 'santri' => [
+            'provider' => 'santri',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

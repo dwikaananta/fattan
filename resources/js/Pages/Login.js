@@ -1,6 +1,26 @@
-import React from "react";
+import { useForm } from "@inertiajs/inertia-react";
+import React, { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
+import { titleState } from "../Storages/page";
 
-const Login = () => {
+const Login = (props) => {
+    const { title } = props;
+    const setTitle = useSetRecoilState(titleState);
+    useEffect(() => setTitle(title), [title]);
+
+    const { data, setData, post, processing, errors } = useForm({});
+
+    const handleChange = (e) => {
+        setData((data) => ({
+            ...data,
+            [e.target.name]: e.target.value,
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post("/auth");
+    };
 
     return (
         <div className="container">
@@ -18,26 +38,43 @@ const Login = () => {
                                     <div className="p-5">
                                         <div className="text-center">
                                             <h1 className="h4 text-gray-900 mb-4">
-                                                Login Page
+                                                {title}
                                             </h1>
                                         </div>
-                                        <form className="user">
+                                        <form
+                                            className="user"
+                                            onSubmit={handleSubmit}
+                                        >
                                             <div className="form-group">
                                                 <input
-                                                    type="email"
+                                                    type="text"
                                                     className="form-control form-control-user"
                                                     id="exampleInputEmail"
                                                     aria-describedby="emailHelp"
+                                                    name="username"
                                                     placeholder="Enter Email Address..."
+                                                    onChange={handleChange}
                                                 />
+                                                {errors.username && (
+                                                    <span className="text-danger">
+                                                        {errors.username}
+                                                    </span>
+                                                )}
                                             </div>
                                             <div className="form-group">
                                                 <input
                                                     type="password"
                                                     className="form-control form-control-user"
                                                     id="exampleInputPassword"
+                                                    name="password"
                                                     placeholder="Password"
+                                                    onChange={handleChange}
                                                 />
+                                                {errors.password && (
+                                                    <span className="text-danger">
+                                                        {errors.password}
+                                                    </span>
+                                                )}
                                             </div>
                                             {/* <div className="form-group">
                                                 <div className="custom-control custom-checkbox small">
@@ -54,12 +91,13 @@ const Login = () => {
                                                     </label>
                                                 </div>
                                             </div> */}
-                                            <a
-                                                href="index.html"
+                                            <button
+                                                type="submit"
                                                 className="btn btn-primary btn-user btn-block"
+                                                disabled={processing}
                                             >
                                                 Login
-                                            </a>
+                                            </button>
                                             {/* <hr />
                                             <a
                                                 href="index.html"

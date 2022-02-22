@@ -59,7 +59,15 @@ const Create = (props) => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-6">
+                    <div className="col-4">
+                        <Input
+                            label="Tempat Lahir"
+                            name="tempat_lahir"
+                            onChange={handleChange}
+                            error={errors.tempat_lahir}
+                        />
+                    </div>
+                    <div className="col-4">
                         <Input
                             label="Tanggal Lahir"
                             type="date"
@@ -68,7 +76,7 @@ const Create = (props) => {
                             error={errors.tanggal_lahir}
                         />
                     </div>
-                    <div className="col-6">
+                    <div className="col-4">
                         <Radio
                             inline={true}
                             name="jenis_kelamin"

@@ -16,7 +16,6 @@ const Guru = (props) => {
             {santri.data && santri.data.length > 0 ? (
                 <>
                     <Table>
-                        {/*  */}
                         <Thead>
                             <tr>
                                 <th>No</th>
@@ -24,6 +23,7 @@ const Guru = (props) => {
                                 <th>Nama</th>
                                 <th>NIK</th>
                                 <th>KK</th>
+                                <th>Tempat Lahir</th>
                                 <th>Tanggal Lahir</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Nama Ortu</th>
@@ -45,6 +45,7 @@ const Guru = (props) => {
                                         <td>{s.nama}</td>
                                         <td className="text-center">{s.nik}</td>
                                         <td className="text-center">{s.kk}</td>
+                                        <td className="text-center">{s.tempat_lahir}</td>
                                         <td className="text-center">
                                             {s.tanggal_lahir}
                                         </td>

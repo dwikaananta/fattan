@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -41,9 +42,23 @@ class HandleInertiaRequests extends Middleware
             'appName' => config('app.name'),
 
             // Lazily
-            'auth.user' => fn () => $request->user()
-                ? $request->user()->only('id', 'name', 'email')
-                : null,
+            'auth.user' => function() {
+                if (Auth::guard('web')->check()) {
+                    return Auth::guard('web')->user();
+                } return null;
+            },
+
+            'auth.guru' => function() {
+                if (Auth::guard('guru')->check()) {
+                    return Auth::guard('guru')->user();
+                } return null;
+            },
+
+            'auth.santri' => function() {
+                if (Auth::guard('santri')->check()) {
+                    return Auth::guard('santri')->user();
+                } return null;
+            },
 
             // Flash msg
             'flash' => [

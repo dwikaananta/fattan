@@ -2,13 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guru;
+use App\Models\Santri;
 use App\Models\User;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class AuthController extends Controller
 {
+    public function login(Request $req)
+    {
+        if (Auth::guard('web')->check() || Auth::guard('guru')->check() || Auth::guard('santri')->check()) {
+            return redirect('/dashboard');
+        }
+
+        return Inertia::render('Login', [
+            'title' => 'Login Page',
+        ]);
+    }
+
     public function auth(Request $req)
     {
         $user = User::count();
@@ -23,45 +38,36 @@ class AuthController extends Controller
         }
 
         $req->validate([
-            'whos' => ['required'],
             'username' => ['required'],
             'password' => ['required'],
         ]);
 
-        if ($req->whos == 'admin') {
-            if (Auth::guard('web')->attempt([
-                'email' => $req->username,
-                'password' => $req->password,
-                'status' => 1,
-            ])) {
-                $req->session()->regenerate();
-            }
+        $uc = User::where('email', $req->username)->first();
+        if ($uc) {
+            Auth::guard('web')->attempt(['email' => $req->username, 'password' => $req->password, 'status' => 9]);
         }
 
-        if ($req->whos == 'guru') {
-            if (Auth::guard('guru')->attempt([
-                'email' => $req->username,
-                'password' => $req->password,
-            ])) {
-                $req->session()->regenerate();
-            }
+        $gc = Guru::where('nip', $req->username)->first();
+        if ($gc) {
+            Auth::guard('guru')->attempt(['nip' => $req->username, 'password' => $req->password]);
         }
 
-        if ($req->whos == 'santri') {
-            if (Auth::guard('santri')->attempt([
-                'nik' => $req->username,
-                'password' => $req->password,
-            ])) {
-                $req->session()->regenerate();
-            }
+        $sc = Santri::where('nis', $req->username)->first();
+        if ($sc) {
+            Auth::guard('santri')->attempt(['nis' => $req->username, 'password' => $req->password]);
         }
 
-        if (Auth::check()) {
-            return redirect()->intended('dashboard');
+        if (Auth::guard('web')->check() || Auth::guard('guru')->check() || Auth::guard('santri')->check()) {
+            $req->session()->regenerate();
+
+            return redirect()->intended('dashboard')->with([
+                'icon' => 'success',
+                'title' => 'Berhasil login !',
+            ]);
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'username' => 'The provided credentials do not match our records.',
         ]);
     }
 
@@ -70,6 +76,6 @@ class AuthController extends Controller
         Auth::logout();
         $req->session()->invalidate();
         $req->session()->regenerateToken();
-        return redirect('/');
+        return redirect('/login');
     }
 }

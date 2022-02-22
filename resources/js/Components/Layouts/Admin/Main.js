@@ -19,7 +19,6 @@ const Main = (props) => {
     const handleAlert = useCallback(() => {
         if (flash.icon && flash.title) {
             saAlert(flash.icon, flash.title, flash.msg);
-            console.log("haha");
         }
     }, [flash.icon, flash.title]);
 
@@ -36,8 +35,8 @@ const Main = (props) => {
                         <Topbar />
                         <div className="container-fluid">
                             <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                                <h1 className="h3 mb-0 text-gray-800">
-                                    {appName}
+                                <h1 className="h3 mb-0 text-gray-800 font-weight-bold">
+                                    {appName} - Sistem Pengelolaan Data Madrasah
                                 </h1>
                                 {linkAdd && (
                                     <Link
