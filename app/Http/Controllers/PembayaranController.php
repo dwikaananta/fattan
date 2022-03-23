@@ -41,6 +41,7 @@ class PembayaranController extends Controller
         return redirect("/santri/$req->santri_id")->with([
             'icon' => 'success',
             'title' => 'Berhasil tambah data santri !',
+            'menus' => 'pembayaran',
         ]);
     }
 

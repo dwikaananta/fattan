@@ -65,6 +65,7 @@ class HandleInertiaRequests extends Middleware
                 'icon' => fn () => $request->session()->get('icon'),
                 'title' => fn () => $request->session()->get('title'),
                 'msg' => fn () => $request->session()->get('msg'),
+                'menus' => fn () => $request->session()->get('menus'),
             ],
         ]);
     }

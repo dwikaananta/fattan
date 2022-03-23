@@ -1,4 +1,5 @@
 import { Inertia } from "@inertiajs/inertia";
+import { Link, usePage } from "@inertiajs/inertia-react";
 import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { ButtonCreate } from "../../Components/Button";
@@ -8,10 +9,12 @@ import { titleState } from "../../Storages/page";
 
 const Show = (props) => {
     const { title, kelas, santri } = props;
+    const { flash } = usePage().props;
+
     const setTitle = useSetRecoilState(titleState);
     useEffect(() => setTitle(title), [title]);
 
-    const [menus, setMenus] = useState("detail");
+    const [menus, setMenus] = useState(flash.menus ? flash.menus : "detail");
 
     const [processing, setProcessing] = useState(false);
 
@@ -233,19 +236,12 @@ const Show = (props) => {
                                             {s.nama}
                                         </td>
                                         <td className="text-center">
-                                            <button
-                                                className="btn btn-danger btn-sm"
-                                                onClick={() => {
-                                                    handleSetSantri({
-                                                        is_delete: true,
-                                                        kelas_id: kelas.id,
-                                                        santri_id: s.id,
-                                                    });
-                                                }}
-                                                disabled={processing}
+                                            <Link
+                                                href={`/nilai-santri/create/${s.kelas_santri_id}/${kelas.id}`}
+                                                className="btn btn-info btn-sm"
                                             >
-                                                Hapus
-                                            </button>
+                                                Cek Nilai
+                                            </Link>
                                         </td>
                                     </tr>
                                 );
@@ -256,13 +252,5 @@ const Show = (props) => {
         </Main>
     );
 };
-
-const setNilai = () => {
-    return (
-        <>
-            <span>Cek Nilai</span>
-        </>
-    )
-}
 
 export default Show;

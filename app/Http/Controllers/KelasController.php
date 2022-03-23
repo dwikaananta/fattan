@@ -37,7 +37,6 @@ class KelasController extends Controller
             'guru_id' => 'required',
             'kelas' => 'required',
             'tahun_ajaran' => 'required',
-            'semester' => 'required',
         ]);
 
         Kelas::create($data);
@@ -80,7 +79,6 @@ class KelasController extends Controller
             'guru_id' => 'required',
             'kelas' => 'required',
             'tahun_ajaran' => 'required',
-            'semester' => 'required',
         ]);
 
         $kelas->update($data);

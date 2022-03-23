@@ -5,6 +5,7 @@ use App\Http\Controllers\GuruController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\KelasSantriController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\NilaiSantriController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\SantriController;
 use Illuminate\Http\Request;
@@ -34,7 +35,9 @@ Route::middleware('is-auth')->group(function () {
     Route::resource('/kelas', KelasController::class);
 
     Route::post('/kelas-santri', [KelasSantriController::class, 'store']);
-    Route::post('/nilai', [NilaiController::class, 'store']);
+
+    Route::get('/nilai-santri/create/{kelas_santri_id}/{kelas_id}', [NilaiSantriController::class, 'create']);
+    Route::post('/nilai-santri/{kelas_santri_id}', [NilaiSantriController::class, 'store']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });

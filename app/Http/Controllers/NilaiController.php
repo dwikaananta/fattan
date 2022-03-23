@@ -35,23 +35,7 @@ class NilaiController extends Controller
      */
     public function store(Request $req)
     {
-        $data = $req->validate([
-            'kelas_santri_id',
-            'mapel_id',
-            'nilai',
-        ]);
-
-        Nilai::updateOrCreate([
-            [
-                'kelas_santri_id' => $req->kelas_santri_id,
-                'mapel_id' => $req->mapel_id,
-            ], $data
-        ]);
-
-        return back()->with([
-            'icon' => 'success',
-            'title' => 'Berhasil ubah data nilai !',
-        ]);
+        // 
     }
 
     /**

@@ -1,3 +1,4 @@
+import { usePage } from "@inertiajs/inertia-react";
 import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import BtnForm from "../../Components/BtnForm";
@@ -10,10 +11,12 @@ import { titleState } from "../../Storages/page";
 
 const Show = (props) => {
     const { title, santri } = props;
+    const { flash } = usePage().props;
+
     const setTitle = useSetRecoilState(titleState);
     useEffect(() => setTitle(title), [title]);
 
-    const [menus, setMenus] = useState("detail");
+    const [menus, setMenus] = useState(flash.menus ? flash.menus : "detail");
 
     return (
         <Main>
@@ -91,64 +94,15 @@ const Show = (props) => {
 
             {menus === "pembayaran" && (
                 <>
-                    {/* <div className="d-flex justify-content-end mb-2">
+                    <div className="d-flex justify-content-end mb-2">
                         <ButtonCreate
                             link={`/pembayaran/create/${santri.id}`}
                             title="Tambah Pembayaran"
                         />
-                    </div> */}
+                    </div>
                     {santri && (
                         <h3>Pembayaran Santri Atas Nama {santri.nama}</h3>
                     )}
-                    <form onSubmit={handleSubmit}>
-                        <div className="row">
-                            <div className="col-md">
-                                <Input
-                                    label="Nominal"
-                                    name="nominal"
-                                    onChange={(e) => handleChange(e)}
-                                    error={errors.nominal}
-                                />
-                            </div>
-                            <div className="col-md">
-                                <Input
-                                    label="Tanggal Transaksi"
-                                    name="tanggal_transaksi"
-                                    type="date"
-                                    onChange={(e) => handleChange(e)}
-                                    error={errors.tanggal_transaksi}
-                                />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md">
-                                <Input
-                                    label="Kelas"
-                                    name="kelas"
-                                    onChange={(e) => handleChange(e)}
-                                    error={errors.kelas}
-                                />
-                            </div>
-                            <div className="col-md">
-                                <Select
-                                    label="Semester"
-                                    name="semester"
-                                    onChange={(e) => handleChange(e)}
-                                    error={errors.semester}
-                                >
-                                    <option value="">Pilih</option>
-                                    <option value="1">Ganjil</option>
-                                    <option value="2">Genap</option>
-                                </Select>
-                            </div>
-                        </div>
-                        <BtnForm
-                            submitTitle="Tambah"
-                            backTitle="Kembali"
-                            backLink={`/santri/${santri.id}`}
-                            processing={processing}
-                        />
-                    </form>
                     <Table>
                         <Thead>
                             <tr>

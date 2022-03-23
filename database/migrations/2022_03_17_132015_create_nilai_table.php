@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('kelas_santri_id');
             $table->bigInteger('mapel_id');
-            $table->boolean('nilai');
+            $table->boolean('nilai')->nullable();
             $table->timestamps();
         });
     }

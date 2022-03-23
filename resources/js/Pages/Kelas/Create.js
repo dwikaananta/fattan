@@ -79,18 +79,6 @@ const Create = (props) => {
                             <option value="2024/2025">2024/2025</option>
                         </Select>
                     </div>
-                    <div className="col-md-6">
-                        <Select
-                            label="Semester"
-                            name="semester"
-                            onChange={handleChange}
-                            error={errors.semester}
-                        >
-                            <option value="">Pilih</option>
-                            <option value="1">Ganjil</option>
-                            <option value="2">Genap</option>
-                        </Select>
-                    </div>
                 </div>
                 <BtnForm
                     submitTitle="Tambah"

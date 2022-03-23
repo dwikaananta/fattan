@@ -15,12 +15,11 @@ class Kelas extends Model
         'guru_id',
         'kelas',
         'tahun_ajaran',
-        'semester',
     ];
 
     public function santri()
     {
-        return $this->belongsToMany(Santri::class, 'kelas_santri', 'kelas_id', 'santri_id');
+        return $this->belongsToMany(Santri::class, 'kelas_santri', 'kelas_id', 'santri_id')->withPivot('id as kelas_santri_id');
     }
 
     public function guru()

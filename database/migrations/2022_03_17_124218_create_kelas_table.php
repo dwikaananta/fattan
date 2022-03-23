@@ -18,7 +18,6 @@ return new class extends Migration
             $table->bigInteger('guru_id');
             $table->string('kelas');
             $table->string('tahun_ajaran');
-            $table->string('semester');
             $table->timestamps();
         });
     }
