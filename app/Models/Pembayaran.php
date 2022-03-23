@@ -4,15 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pembayaran extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
-    protected $table = 'mapel';
+    protected $table = 'pembayaran';
 
     protected $fillable = [
-        'nama',
+        'santri_id',
+        'nominal',
+        'tanggal_transaksi',
+        'kelas',
+        'semester',
     ];
 }

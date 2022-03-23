@@ -9,9 +9,9 @@ use Inertia\Inertia;
 
 class SantriController extends Controller
 {
-    public function index()
+    public function index(Request $req)
     {
-        $santri = Santri::latest()->paginate(10);
+        $santri = Santri::with('pembayaran')->latest()->paginate();
 
         return Inertia::render('Santri/Santri', [
             'title' => 'Data Santri',
@@ -70,7 +70,10 @@ class SantriController extends Controller
 
     public function show(Santri $santri)
     {
-        //
+        return Inertia::render('Santri/Show', [
+            'title' => 'Lihat Data Santri',
+            'santri' => Santri::with('pembayaran')->find($santri->id),
+        ]);
     }
 
     public function edit(Santri $santri)

@@ -22,7 +22,7 @@ class NilaiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($kelas_id)
     {
         //
     }
@@ -33,9 +33,25 @@ class NilaiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        //
+        $data = $req->validate([
+            'kelas_santri_id',
+            'mapel_id',
+            'nilai',
+        ]);
+
+        Nilai::updateOrCreate([
+            [
+                'kelas_santri_id' => $req->kelas_santri_id,
+                'mapel_id' => $req->mapel_id,
+            ], $data
+        ]);
+
+        return back()->with([
+            'icon' => 'success',
+            'title' => 'Berhasil ubah data nilai !',
+        ]);
     }
 
     /**

@@ -19,7 +19,7 @@ class IsAuth
         if ($request->user('web') || $request->user('guru') || $request->user('santri')) {
             return $next($request);
         } else {
-            return redirect('/login');
+            return redirect('/');
         }
     }
 }

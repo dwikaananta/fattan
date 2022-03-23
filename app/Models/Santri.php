@@ -26,4 +26,19 @@ class Santri extends Authenticatable
         'alamat',
         'password',
     ];
+
+    public function pembayaran()
+    {
+        return $this->hasMany(Pembayaran::class, 'santri_id', 'id');
+    }
+
+    public function kelas()
+    {
+        return $this->belongsToMany(Kelas::class, 'kelas_santri', 'santri_id', 'kelas_id');
+    }
+
+    public function kelas_santri()
+    {
+        return $this->hasMany(KelasSantri::class, 'santri_id', 'id');
+    }
 }

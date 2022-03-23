@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import Main from "../../Components/Layouts/Admin/Main";
 import NoData from "../../Components/Layouts/NoData";
@@ -10,6 +10,8 @@ const Guru = (props) => {
     const { title, santri } = props;
     const setTitle = useSetRecoilState(titleState);
     useEffect(() => setTitle(title), [title]);
+
+    const [page, setPage] = useState(1);
 
     return (
         <Main titleAdd="Tambah Data" linkAdd="/santri/create">
@@ -45,7 +47,9 @@ const Guru = (props) => {
                                         <td>{s.nama}</td>
                                         <td className="text-center">{s.nik}</td>
                                         <td className="text-center">{s.kk}</td>
-                                        <td className="text-center">{s.tempat_lahir}</td>
+                                        <td className="text-center">
+                                            {s.tempat_lahir}
+                                        </td>
                                         <td className="text-center">
                                             {s.tanggal_lahir}
                                         </td>
@@ -57,8 +61,9 @@ const Guru = (props) => {
                                             {s.telp_ortu}
                                         </td>
                                         <td>{s.alamat}</td>
-                                        <td className="text-center">
+                                        <td className="text-center text-nowrap">
                                             <Tbtn
+                                                show={`/santri/${s.id}`}
                                                 edit={`/santri/${s.id}/edit`}
                                                 del={`/santri/${s.id}`}
                                             />

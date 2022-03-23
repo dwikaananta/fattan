@@ -44,6 +44,10 @@ const Sidebar = (props) => {
 
             <hr className="sidebar-divider" />
 
+            <SinggleMenu title="Data Kelas" link="/kelas" fa="fa-home" />
+
+            <hr className="sidebar-divider" />
+
             <MultipleMenu />
 
             <hr className="sidebar-divider d-none d-md-block" />

@@ -8,7 +8,7 @@ import { InertiaProgress } from "@inertiajs/progress";
 import { RecoilRoot } from "recoil";
 
 createInertiaApp({
-    resolve: (name) => import(`./Pages/${name}`),
+    resolve: (name) => require(`./Pages/${name}`),
     setup({ el, App, props }) {
         render(
             <RecoilRoot>

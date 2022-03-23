@@ -101,7 +101,6 @@ const Create = (props) => {
                                     value: 2,
                                 },
                             ]}
-                            checked={data.jenis_kelamin}
                             onChange={(e) => handleChange(e)}
                             error={errors.jenis_kelamin}
                         />
@@ -135,7 +134,7 @@ const Create = (props) => {
                     error={errors.alamat}
                 />
                 <BtnForm
-                    submitTitle="Tambah"
+                    submitTitle="Ubah"
                     backTitle="Kembali"
                     backLink="/santri"
                     processing={processing}

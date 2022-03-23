@@ -302,7 +302,7 @@ const Topbar = () => {
                         aria-expanded="false"
                     >
                         <span className="mr-2 d-none d-lg-inline text-gray-600 small">
-                            {auth.user && "Oprator - " + auth.user.name}
+                            {auth.user && "Operator - " + auth.user.name}
                             {auth.guru && "Guru - " + auth.guru.nama}
                             {auth.santri && "Santri - " + auth.santri.nama}
                         </span>
