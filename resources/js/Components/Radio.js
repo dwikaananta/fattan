@@ -15,7 +15,7 @@ const Radio = (props) => {
         <>
             {label && (
                 <label
-                    className="font-weight-bold text-secondary"
+                    className="font-weight-bold text-primary"
                     dangerouslySetInnerHTML={{ __html: label }}
                 ></label>
             )}

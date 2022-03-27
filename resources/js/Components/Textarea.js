@@ -17,7 +17,7 @@ const Textarea = (props) => {
     return (
         <div className="form-group">
             {label && (
-                <label className="font-weight-bold text-secondary">
+                <label className="font-weight-bold text-primary">
                     {label}
                 </label>
             )}

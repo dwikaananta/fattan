@@ -27,7 +27,7 @@ const Input = (props) => {
                         <span className="mr-1 mt-1">{customFront}</span>
                     )}
                     <input
-                        className={`form-control form-control-sm border-secondary ${
+                        className={`form-control form-control-sm border-primary ${
                             error && "is-invalid"
                         }`}
                         onChange={onChange}
