@@ -1,9 +1,11 @@
-import { Link } from "@inertiajs/inertia-react";
+import { Link, usePage } from "@inertiajs/inertia-react";
 import React from "react";
 import { ToggleContext } from "./Main";
 
 const Sidebar = (props) => {
     const { appName } = props;
+    const { auth } = usePage().props;
+
     const [toggle, setToggle] = React.useContext(ToggleContext);
 
     return (
@@ -17,8 +19,9 @@ const Sidebar = (props) => {
                 className="sidebar-brand d-flex align-items-center justify-content-center"
                 href="/dashboard"
             >
-                <div className="sidebar-brand-icon rotate-n-15">
-                    <i className="fas fa-laugh-wink" />
+                <div className="sidebar-brand-icon bg-white rounded-pill">
+                    {/* <i className="fas fa-laugh-wink" /> */}
+                    <img src="/images/logo.png" className="w-50" alt="" />
                 </div>
                 <div className="sidebar-brand-text mx-3">
                     {appName}
@@ -36,21 +39,77 @@ const Sidebar = (props) => {
 
             <hr className="sidebar-divider" />
 
-            <SinggleMenu title="Data Guru" link="/guru" fa="fa-users" />
+            {auth.santri ? (
+                <>
+                    <SinggleMenu
+                        title="Profil"
+                        link={`/santri/${auth.santri.id}?section=detail`}
+                        fa="fa-user"
+                    />
 
-            <hr className="sidebar-divider" />
+                    <hr className="sidebar-divider" />
 
-            <SinggleMenu title="Data Santri" link="/santri" fa="fa-users" />
+                    <SinggleMenu
+                        title="Pembayaran"
+                        link={`/santri/${auth.santri.id}?section=pembayaran`}
+                        fa="fa-coins"
+                    />
 
-            <hr className="sidebar-divider" />
+                    <hr className="sidebar-divider" />
 
-            <SinggleMenu title="Data Kelas" link="/kelas" fa="fa-home" />
+                    <SinggleMenu
+                        title="Nilai"
+                        link={`/santri/${auth.santri.id}?section=nilai`}
+                        fa="fa-star"
+                    />
 
-            <hr className="sidebar-divider" />
+                    <hr className="sidebar-divider" />
+                </>
+            ) : (
+                ""
+            )}
 
-            <MultipleMenu />
+            {auth.user ? (
+                <>
+                    <SinggleMenu title="Data Guru" link="/guru" fa="fa-users" />
 
-            <hr className="sidebar-divider d-none d-md-block" />
+                    <hr className="sidebar-divider" />
+                </>
+            ) : (
+                ""
+            )}
+
+            {auth.user ? (
+                <>
+                    <SinggleMenu
+                        title="Data Santri"
+                        link="/santri"
+                        fa="fa-users"
+                    />
+
+                    <hr className="sidebar-divider" />
+                </>
+            ) : (
+                ""
+            )}
+
+            {auth.guru || auth.user ? (
+                <>
+                    <SinggleMenu
+                        title="Data Kelas"
+                        link="/kelas"
+                        fa="fa-home"
+                    />
+
+                    <hr className="sidebar-divider" />
+                </>
+            ) : (
+                ""
+            )}
+
+            {/* <MultipleMenu /> */}
+
+            {/* <hr className="sidebar-divider d-none d-md-block" /> */}
 
             <div className="text-center d-none d-md-inline">
                 <button

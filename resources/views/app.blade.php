@@ -29,6 +29,8 @@
 <body>
     @inertia
 
+    <div id="rootModal"></div>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="/admin/vendor/jquery/jquery.min.js"></script>

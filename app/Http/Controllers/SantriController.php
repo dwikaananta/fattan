@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mapel;
 use App\Models\Santri;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -43,8 +44,8 @@ class SantriController extends Controller
         function generateNis($last_id)
         {
             $new_id = $last_id + 1;
-            $default = 3;
-            $length_id = strlen($last_id);
+            $default = 4;
+            $length_id = strlen($new_id);
             $range = $default - $length_id;
 
             $data = '';
@@ -68,11 +69,22 @@ class SantriController extends Controller
         ]);
     }
 
-    public function show(Santri $santri)
+    public function show(Request $req, Santri $santri)
     {
+        $santri = Santri::with([
+            'pembayaran',
+            'kelas_santri' => fn ($query) => $query->with(['nilai', 'kelas' => fn($query) => $query->with('guru')]),
+        ])->find($santri->id);
+
+        $mapel = Mapel::orderBy('nama')->get();
+
+        $section = $req->section ? $req->section : false;
+
         return Inertia::render('Santri/Show', [
             'title' => 'Lihat Data Santri',
-            'santri' => Santri::with('pembayaran')->find($santri->id),
+            'santri' => $santri,
+            'mapel' => $mapel,
+            'section' => $section,
         ]);
     }
 

@@ -43,10 +43,9 @@ class NilaiSantriController extends Controller
             'mapel_id' => $req->mapel_id,
         ], array_merge(['kelas_santri_id' => $kelas_santri_id], $data));
 
-        return redirect("/kelas/$req->kelas_id")->with([
+        return back()->with([
             'icon' => 'success',
             'title' => 'Berhasil ubah data nilai !',
-            'menus' => 'nilai',
         ]);
     }
 

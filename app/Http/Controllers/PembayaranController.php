@@ -38,10 +38,14 @@ class PembayaranController extends Controller
 
         Pembayaran::create($data);
 
-        return redirect("/santri/$req->santri_id")->with([
+        // return redirect("/santri/$req->santri_id")->with([
+        //     'icon' => 'success',
+        //     'title' => 'Berhasil tambah data santri !',
+        //     'menus' => 'pembayaran',
+        // ]);
+        return back()->with([
             'icon' => 'success',
-            'title' => 'Berhasil tambah data santri !',
-            'menus' => 'pembayaran',
+            'title' => 'Berhasil ubah data kelas !',
         ]);
     }
 

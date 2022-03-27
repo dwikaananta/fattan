@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\KelasSantri;
+use App\Models\Mapel;
 use App\Models\Santri;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class KelasController extends Controller
 {
-    public function index()
+    public function index(Request $req)
     {
-        $kelas = Kelas::with('guru')->latest()->paginate(10);
+        $kelas = Kelas::when(Auth::guard('guru')->check(), fn ($query) => $query->where('guru_id', $req->user('guru')->id))
+            ->with('guru')->latest()->paginate(10);
 
         return Inertia::render('Kelas/Kelas', [
             'title' => 'Data Kelas',
@@ -49,13 +52,20 @@ class KelasController extends Controller
 
     public function show($id)
     {
-        $kelas = Kelas::with(['santri' => fn ($query) => $query->with('kelas_santri'), 'guru'])->find($id);
+        $kelas = Kelas::with([
+            'kelas_santri' => fn ($query) => $query->with('nilai'),
+            'santri' => fn ($query) => $query->with('kelas_santri'),
+            'guru'
+        ])->find($id);
         $santri = Santri::doesntHave('kelas')->orderBy('nama')->get();
+
+        $mapel = Mapel::orderBy('nama')->get();
 
         return Inertia::render('Kelas/Show', [
             'title' => 'Lihat Data Kelas',
             'kelas' => $kelas,
             'santri' => $santri,
+            'mapel' => $mapel,
         ]);
     }
 
@@ -89,9 +99,9 @@ class KelasController extends Controller
         ]);
     }
 
-    public function destroy(Kelas $kelas)
+    public function destroy($id)
     {
-        Kelas::destroy($kelas->id);
+        Kelas::destroy($id);
 
         return redirect('/kelas')->with([
             'icon' => 'success',

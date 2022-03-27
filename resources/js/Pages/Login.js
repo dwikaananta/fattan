@@ -1,10 +1,13 @@
-import { useForm } from "@inertiajs/inertia-react";
+import { useForm, usePage } from "@inertiajs/inertia-react";
 import React, { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
+import AppHead from "../Components/Layouts/AppHead";
 import { titleState } from "../Storages/page";
 
 const Login = (props) => {
     const { title } = props;
+    const { appName } = usePage().props;
+
     const setTitle = useSetRecoilState(titleState);
     useEffect(() => setTitle(title), [title]);
 
@@ -24,6 +27,7 @@ const Login = (props) => {
 
     return (
         <div className="container">
+            <AppHead title={`${appName} - ${title}`}></AppHead>
             {/* Outer Row */}
             <div className="row d-flex justify-content-center align-items-center vh-100">
                 <div className="col-xl-10 col-lg-12 col-md-9">
@@ -31,11 +35,11 @@ const Login = (props) => {
                         <div className="card-body p-0">
                             {/* Nested Row within Card Body */}
                             <div className="row">
-                                <div className="col-lg-6 d-none d-lg-block bg-login-image">
-                                    {/* Img */}
+                                <div className="col-lg-6 d-none d-lg-block text-center py-5 bg-light">
+                                    <img src="/images/logo.png" alt="" className="img-fluid w-50" />
                                 </div>
-                                <div className="col-lg-6">
-                                    <div className="p-5">
+                                <div className="col-lg-6 d-flex align-items-center">
+                                    <div className="p-5 w-100">
                                         <div className="text-center">
                                             <h1 className="h4 text-gray-900 mb-4">
                                                 {title}
@@ -52,7 +56,7 @@ const Login = (props) => {
                                                     id="exampleInputEmail"
                                                     aria-describedby="emailHelp"
                                                     name="username"
-                                                    placeholder="Enter Email Address..."
+                                                    placeholder="User ID..."
                                                     onChange={handleChange}
                                                 />
                                                 {errors.username && (

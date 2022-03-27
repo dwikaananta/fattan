@@ -20,7 +20,7 @@ const Guru = (props) => {
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
-                                <th>Nip</th>
+                                <th>NIP</th>
                                 <th>Alamat</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Telp</th>

@@ -17,6 +17,11 @@ class Kelas extends Model
         'tahun_ajaran',
     ];
 
+    public function kelas_santri()
+    {
+        return $this->hasMany(KelasSantri::class, 'kelas_id', 'id');
+    }
+
     public function santri()
     {
         return $this->belongsToMany(Santri::class, 'kelas_santri', 'kelas_id', 'santri_id')->withPivot('id as kelas_santri_id');

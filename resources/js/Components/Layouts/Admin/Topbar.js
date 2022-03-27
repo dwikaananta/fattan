@@ -1,6 +1,8 @@
+import { Inertia } from "@inertiajs/inertia";
 import { Link, usePage } from "@inertiajs/inertia-react";
 import React from "react";
 import { useRecoilValue } from "recoil";
+import { saConfirm } from "../../../Helpers/sa2";
 import { userState } from "../../../Storages/auth";
 import { ToggleContext } from "./Main";
 
@@ -317,7 +319,7 @@ const Topbar = () => {
                         className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                         aria-labelledby="userDropdown"
                     >
-                        <a className="dropdown-item" href="#">
+                        {/* <a className="dropdown-item" href="#">
                             <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400" />
                             Profile
                         </a>
@@ -329,12 +331,18 @@ const Topbar = () => {
                             <i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400" />
                             Activity Log
                         </a>
-                        <div className="dropdown-divider" />
+                        <div className="dropdown-divider" /> */}
                         <Link
                             className="dropdown-item"
-                            href="/logout"
-                            method="POST"
-                            as="button"
+                            onClick={() => {
+                                saConfirm("warning", "Yakin logout ?").then(
+                                    (res) => {
+                                        if (res.isConfirmed) {
+                                            Inertia.post("/logout");
+                                        }
+                                    }
+                                );
+                            }}
                         >
                             <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" />
                             Logout

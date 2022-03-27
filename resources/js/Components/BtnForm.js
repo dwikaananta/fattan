@@ -17,9 +17,11 @@ const BtnForm = (props) => {
             >
                 {submitTitle}
             </button>
-            <Link href={backLink} className="btn btn-danger btn-sm">
-                {backTitle}
-            </Link>
+            {backLink && (
+                <Link href={backLink} className="btn btn-danger btn-sm">
+                    {backTitle}
+                </Link>
+            )}
         </div>
     );
 };

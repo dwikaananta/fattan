@@ -1,3 +1,4 @@
+import { usePage } from "@inertiajs/inertia-react";
 import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import Main from "../../Components/Layouts/Admin/Main";
@@ -8,6 +9,8 @@ import { titleState } from "../../Storages/page";
 
 const Kelas = (props) => {
     const { title, kelas } = props;
+    const { auth } = usePage().props;
+
     const setTitle = useSetRecoilState(titleState);
     useEffect(() => setTitle(title), [title]);
 
@@ -24,7 +27,6 @@ const Kelas = (props) => {
                                 <th>Guru</th>
                                 <th>Kelas</th>
                                 <th>Tahun Ajaran</th>
-                                <th>semester</th>
                                 <th>
                                     <i className="fa fa-bars" />
                                 </th>
@@ -46,14 +48,17 @@ const Kelas = (props) => {
                                         <td className="text-nowrap text-center">
                                             {k.tahun_ajaran}
                                         </td>
-                                        <td className="text-nowrap text-center">
-                                            {k.semester}
-                                        </td>
                                         <td className="text-center text-nowrap">
                                             <Tbtn
                                                 show={`/kelas/${k.id}`}
-                                                edit={`/kelas/${k.id}/edit`}
-                                                del={`/kelas/${k.id}`}
+                                                edit={
+                                                    !auth.guru &&
+                                                    `/kelas/${k.id}/edit`
+                                                }
+                                                del={
+                                                    !auth.guru &&
+                                                    `/kelas/${k.id}`
+                                                }
                                             />
                                         </td>
                                     </tr>

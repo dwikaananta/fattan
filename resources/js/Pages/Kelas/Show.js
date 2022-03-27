@@ -1,15 +1,19 @@
 import { Inertia } from "@inertiajs/inertia";
-import { Link, usePage } from "@inertiajs/inertia-react";
-import React, { useEffect, useState } from "react";
+import { Link, useForm, usePage } from "@inertiajs/inertia-react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
+import BtnForm from "../../Components/BtnForm";
 import { ButtonCreate } from "../../Components/Button";
+import Input from "../../Components/Input";
 import Main from "../../Components/Layouts/Admin/Main";
+import Modal from "../../Components/Layouts/Modal";
 import Table, { Tbody, Thead } from "../../Components/Layouts/Table";
+import Select from "../../Components/Select";
 import { titleState } from "../../Storages/page";
 
 const Show = (props) => {
-    const { title, kelas, santri } = props;
-    const { flash } = usePage().props;
+    const { title, kelas, santri, mapel } = props;
+    const { auth, flash } = usePage().props;
 
     const setTitle = useSetRecoilState(titleState);
     useEffect(() => setTitle(title), [title]);
@@ -36,18 +40,23 @@ const Show = (props) => {
                     onClick={() => setMenus("detail")}
                     className="col-4 w-100 btn btn-primary"
                 >
+                    <i className="fa fa-bars mr-2" />
                     Detail
                 </button>
-                <button
-                    onClick={() => setMenus("santri")}
-                    className="col-4 w-100 btn btn-success"
-                >
-                    Santri
-                </button>
+                {!auth.guru && (
+                    <button
+                        onClick={() => setMenus("santri")}
+                        className="col-4 w-100 btn btn-success"
+                    >
+                        <i className="fa fa-users mr-2" />
+                        Santri
+                    </button>
+                )}
                 <button
                     onClick={() => setMenus("nilai")}
                     className="col-4 w-100 btn btn-info"
                 >
+                    <i className="fa fa-star mr-2" />
                     Nilai
                 </button>
             </div>
@@ -71,23 +80,12 @@ const Show = (props) => {
                             <td>Tahun Ajaran</td>
                             <td>{kelas.tahun_ajaran}</td>
                         </tr>
-                        <tr>
-                            <td>Semester</td>
-                            <td>{kelas.semester}</td>
-                        </tr>
                     </Tbody>
                 </Table>
             )}
 
             {menus === "santri" && (
                 <>
-                    <div className="d-flex justify-content-end mb-2">
-                        <ButtonCreate
-                            link={`/pembayaran/create/${santri.id}`}
-                            title="Tambah Pembayaran"
-                        />
-                    </div>
-
                     <div className="row">
                         <div className="col-6">
                             <Table>
@@ -236,12 +234,15 @@ const Show = (props) => {
                                             {s.nama}
                                         </td>
                                         <td className="text-center">
-                                            <Link
-                                                href={`/nilai-santri/create/${s.kelas_santri_id}/${kelas.id}`}
-                                                className="btn btn-info btn-sm"
-                                            >
-                                                Cek Nilai
-                                            </Link>
+                                            <CreateNilai
+                                                kelas={kelas}
+                                                kelas_id={kelas.id}
+                                                santri={s}
+                                                mapel={mapel}
+                                                kelas_santri_id={
+                                                    s.kelas_santri_id
+                                                }
+                                            />
                                         </td>
                                     </tr>
                                 );
@@ -250,6 +251,141 @@ const Show = (props) => {
                 </Table>
             )}
         </Main>
+    );
+};
+
+const CreateNilai = ({ kelas, kelas_id, santri, mapel, kelas_santri_id }) => {
+    const [modal, setModal] = useState(false);
+    const tagForm = useRef(false);
+
+    const { data, setData, post, processing, errors } = useForm({
+        kelas_id: kelas_id,
+    });
+
+    const handleChange = (e) => {
+        setData((data) => ({
+            ...data,
+            [e.target.name]: e.target.value,
+        }));
+    };
+
+    const handleOpen = () => {
+        setModal(true);
+    };
+
+    const handleClose = () => {
+        tagForm.current && tagForm.current.reset();
+        setModal(false);
+        setData({});
+    };
+
+    const handleFinish = () => {
+        tagForm.current && tagForm.current.reset();
+        setData({});
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        Inertia.post(`/nilai-santri/${kelas_santri_id}`, data, {
+            onSuccess: () => {
+                Inertia.reload();
+                handleFinish();
+            },
+        });
+    };
+
+    return (
+        <>
+            <button
+                className="d-sm-inline-block btn btn-primary shadow-sm"
+                onClick={handleOpen}
+            >
+                <i className="fas fa-save fa-sm text-white-50 mr-2" />
+                Nilai
+            </button>
+            <Modal
+                modal={modal}
+                title={`Nilai Santri Atas Nama ${santri.nama}`}
+                onClose={handleClose}
+            >
+                <form onSubmit={handleSubmit} ref={tagForm} className="mb-3">
+                    <div className="row">
+                        <div className="col-6">
+                            <Select
+                                label="Mapel"
+                                name="mapel_id"
+                                onChange={handleChange}
+                                error={errors.mapel_id}
+                            >
+                                <option value="">Pilih</option>
+                                {mapel.length > 0 &&
+                                    mapel.map((m, index) => {
+                                        return (
+                                            <React.Fragment key={index}>
+                                                <option value={m.id}>
+                                                    {m.nama}
+                                                </option>
+                                            </React.Fragment>
+                                        );
+                                    })}
+                            </Select>
+                        </div>
+                        <div className="col-6">
+                            <Input
+                                label="Nilai"
+                                name="nilai"
+                                onChange={handleChange}
+                                error={errors.nilai}
+                            />
+                        </div>
+                    </div>
+                    <BtnForm submitTitle="Simpan" processing={processing} />
+                </form>
+                <Table>
+                    <Thead>
+                        <tr>
+                            <th colSpan={3}>Data Nilai</th>
+                        </tr>
+                        <tr>
+                            <th>No</th>
+                            <th>Mapel</th>
+                            <th>Nilai</th>
+                        </tr>
+                    </Thead>
+                    <Tbody>
+                        {kelas.kelas_santri
+                            .filter(
+                                (ks) =>
+                                    parseInt(ks.santri_id) ===
+                                        parseInt(santri.id) && ks.nilai
+                            )
+                            .map((ks) => {
+                                return ks.nilai.map((n, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td className="text-center">
+                                                {index + 1}
+                                            </td>
+                                            <td>
+                                                {mapel
+                                                    .filter(
+                                                        (m) =>
+                                                            parseInt(m.id) ===
+                                                            parseInt(n.mapel_id)
+                                                    )
+                                                    .map((m) => m.nama)}
+                                            </td>
+                                            <td className="text-center">
+                                                {n.nilai}
+                                            </td>
+                                        </tr>
+                                    );
+                                });
+                            })}
+                    </Tbody>
+                </Table>
+            </Modal>
+        </>
     );
 };
 

@@ -15,4 +15,14 @@ class KelasSantri extends Model
         'kelas_id',
         'santri_id',
     ];
+
+    public function nilai()
+    {
+        return $this->hasMany(Nilai::class, 'kelas_santri_id', 'id');
+    }
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'kelas_id', 'id');
+    }
 }
