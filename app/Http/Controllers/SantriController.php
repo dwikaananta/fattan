@@ -80,12 +80,21 @@ class SantriController extends Controller
 
         $section = $req->section ? $req->section : false;
 
-        return Inertia::render('Santri/Show', [
-            'title' => 'Lihat Data Santri',
-            'santri' => $santri,
-            'mapel' => $mapel,
-            'section' => $section,
-        ]);
+        if ($req->cetak_ijasah) {
+            return Inertia::render('Santri/CetakIjasah', [
+                'title' => 'Lihat Data Santri',
+                'santri' => $santri,
+                'mapel' => $mapel,
+                'section' => $section,
+            ]);
+        } else {
+            return Inertia::render('Santri/Show', [
+                'title' => 'Lihat Data Santri',
+                'santri' => $santri,
+                'mapel' => $mapel,
+                'section' => $section,
+            ]);
+        }
     }
 
     public function edit(Santri $santri)

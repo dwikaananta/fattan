@@ -60,7 +60,7 @@ const Main = (props) => {
                         </div>
                     </div>
 
-                    <Footer />
+                    <Footer appName={appName} />
                 </div>
             </div>
         </ToggleContext.Provider>

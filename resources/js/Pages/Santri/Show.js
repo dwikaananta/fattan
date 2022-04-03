@@ -1,5 +1,5 @@
 import { Inertia } from "@inertiajs/inertia";
-import { useForm, usePage } from "@inertiajs/inertia-react";
+import { Link, useForm, usePage } from "@inertiajs/inertia-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import BtnForm from "../../Components/BtnForm";
@@ -204,6 +204,7 @@ const Nilai = ({ santri, kelas, mapel }) => {
                         )
                         .map((ks) => ks.kelas.tahun_ajaran)}
             </p>
+            {kelas === 6 && <Link className="btn btn-primary" href="?cetak_ijasah=true">Cetak Ijasah</Link>}
             <Table>
                 <Thead>
                     <tr>

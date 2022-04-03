@@ -95,7 +95,7 @@ const Edit = (props) => {
                 <BtnForm
                     submitTitle="Ubah"
                     backTitle="Kembali"
-                    backLink="/guru"
+                    backLink="back"
                     processing={processing}
                 />
             </form>

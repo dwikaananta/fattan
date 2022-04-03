@@ -18,9 +18,22 @@ const BtnForm = (props) => {
                 {submitTitle}
             </button>
             {backLink && (
-                <Link href={backLink} className="btn btn-danger btn-sm">
-                    {backTitle}
-                </Link>
+                <>
+                    {backLink === "back" ? (
+                        // kembali
+                        <button
+                            onClick={() => window.history.back()}
+                            className="btn btn-danger btn-sm"
+                        >
+                            {backTitle}
+                        </button>
+                    ) : (
+                        // link
+                        <Link href={backLink} className="btn btn-danger btn-sm">
+                            {backTitle}
+                        </Link>
+                    )}
+                </>
             )}
         </div>
     );

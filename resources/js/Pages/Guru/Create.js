@@ -89,7 +89,7 @@ const Create = (props) => {
                 <BtnForm
                     submitTitle="Tambah"
                     backTitle="Kembali"
-                    backLink="/guru"
+                    backLink="back"
                     processing={processing}
                 />
             </form>

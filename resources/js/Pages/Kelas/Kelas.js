@@ -17,7 +17,7 @@ const Kelas = (props) => {
     const [page, setPage] = useState(1);
 
     return (
-        <Main titleAdd="Tambah Data" linkAdd="/kelas/create">
+        <Main titleAdd="Tambah Data" linkAdd={auth.user && "/kelas/create"}>
             {kelas.data && kelas.data.length > 0 ? (
                 <>
                     <Table>
