@@ -188,7 +188,7 @@ const Show = (props) => {
                                                 (s) =>
                                                     String(s.nis) ===
                                                         searchOnlyKelas ||
-                                                    searchAll === ""
+                                                    searchOnlyKelas === ""
                                             )
                                             .map((s, index) => {
                                                 return (
