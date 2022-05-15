@@ -45,7 +45,7 @@ class PembayaranController extends Controller
         // ]);
         return back()->with([
             'icon' => 'success',
-            'title' => 'Berhasil ubah data kelas !',
+            'title' => 'Berhasil tambah data pembayaran !',
         ]);
     }
 

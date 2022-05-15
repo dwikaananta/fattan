@@ -8,6 +8,7 @@ import Input from "../../Components/Input";
 import Main from "../../Components/Layouts/Admin/Main";
 import Modal from "../../Components/Layouts/Modal";
 import Table, { Tbody, Thead } from "../../Components/Layouts/Table";
+import { FilterSearch } from "../../Components/Search";
 import Select from "../../Components/Select";
 import { titleState } from "../../Storages/page";
 
@@ -32,6 +33,9 @@ const Show = (props) => {
             },
         });
     };
+
+    const [searchAll, setSearchAll] = useState("");
+    const [searchOnlyKelas, setSearchOnlyKelas] = useState("");
 
     return (
         <Main>
@@ -88,6 +92,11 @@ const Show = (props) => {
                 <>
                     <div className="row">
                         <div className="col-6">
+                            <FilterSearch
+                                label="Cari semua Santri"
+                                placeholder="NIS"
+                                onChange={(res) => setSearchAll(res)}
+                            />
                             <Table>
                                 <Thead>
                                     <tr>
@@ -104,47 +113,59 @@ const Show = (props) => {
                                 </Thead>
                                 <Tbody>
                                     {santri.length > 0 &&
-                                        santri.map((s, index) => {
-                                            return (
-                                                <tr key={index}>
-                                                    <td className="text-center">
-                                                        {index + 1}
-                                                    </td>
-                                                    <td className="text-center">
-                                                        {s.nis}
-                                                    </td>
-                                                    <td className="text-center">
-                                                        {s.nama}
-                                                    </td>
-                                                    <td className="text-center">
-                                                        <button
-                                                            className="btn btn-primary btn-sm"
-                                                            onClick={() => {
-                                                                handleSetSantri(
-                                                                    {
-                                                                        is_delete: false,
-                                                                        kelas_id:
-                                                                            kelas.id,
-                                                                        santri_id:
-                                                                            s.id,
-                                                                    }
-                                                                );
-                                                            }}
-                                                            disabled={
-                                                                processing
-                                                            }
-                                                        >
-                                                            Tambah
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
+                                        santri
+                                            .filter(
+                                                (s) =>
+                                                    String(s.nis) ===
+                                                        searchAll ||
+                                                    searchAll === ""
+                                            )
+                                            .map((s, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td className="text-center">
+                                                            {index + 1}
+                                                        </td>
+                                                        <td className="text-center">
+                                                            {s.nis}
+                                                        </td>
+                                                        <td className="text-center">
+                                                            {s.nama}
+                                                        </td>
+                                                        <td className="text-center">
+                                                            <button
+                                                                className="btn btn-primary btn-sm"
+                                                                onClick={() => {
+                                                                    handleSetSantri(
+                                                                        {
+                                                                            is_delete: false,
+                                                                            kelas_id:
+                                                                                kelas.id,
+                                                                            santri_id:
+                                                                                s.id,
+                                                                        }
+                                                                    );
+                                                                }}
+                                                                disabled={
+                                                                    processing
+                                                                }
+                                                            >
+                                                                Tambah
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
                                 </Tbody>
                             </Table>
                         </div>
 
                         <div className="col-6">
+                            <FilterSearch
+                                label="Cari Santri Kelas"
+                                placeholder="NIS"
+                                onChange={(res) => setSearchOnlyKelas(res)}
+                            />
                             <Table>
                                 <Thead>
                                     <tr>
@@ -162,42 +183,49 @@ const Show = (props) => {
                                 <Tbody>
                                     {kelas.santri &&
                                         kelas.santri.length > 0 &&
-                                        kelas.santri.map((s, index) => {
-                                            return (
-                                                <tr key={index}>
-                                                    <td className="text-center">
-                                                        {index + 1}
-                                                    </td>
-                                                    <td className="text-center">
-                                                        {s.nis}
-                                                    </td>
-                                                    <td className="text-center">
-                                                        {s.nama}
-                                                    </td>
-                                                    <td className="text-center">
-                                                        <button
-                                                            className="btn btn-danger btn-sm"
-                                                            onClick={() => {
-                                                                handleSetSantri(
-                                                                    {
-                                                                        is_delete: true,
-                                                                        kelas_id:
-                                                                            kelas.id,
-                                                                        santri_id:
-                                                                            s.id,
-                                                                    }
-                                                                );
-                                                            }}
-                                                            disabled={
-                                                                processing
-                                                            }
-                                                        >
-                                                            Hapus
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
+                                        kelas.santri
+                                            .filter(
+                                                (s) =>
+                                                    String(s.nis) ===
+                                                        searchOnlyKelas ||
+                                                    searchAll === ""
+                                            )
+                                            .map((s, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td className="text-center">
+                                                            {index + 1}
+                                                        </td>
+                                                        <td className="text-center">
+                                                            {s.nis}
+                                                        </td>
+                                                        <td className="text-center">
+                                                            {s.nama}
+                                                        </td>
+                                                        <td className="text-center">
+                                                            <button
+                                                                className="btn btn-danger btn-sm"
+                                                                onClick={() => {
+                                                                    handleSetSantri(
+                                                                        {
+                                                                            is_delete: true,
+                                                                            kelas_id:
+                                                                                kelas.id,
+                                                                            santri_id:
+                                                                                s.id,
+                                                                        }
+                                                                    );
+                                                                }}
+                                                                disabled={
+                                                                    processing
+                                                                }
+                                                            >
+                                                                Hapus
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
                                 </Tbody>
                             </Table>
                         </div>
