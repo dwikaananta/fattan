@@ -7,6 +7,7 @@ use App\Http\Controllers\KelasSantriController;
 use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\NilaiSantriController;
 use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\PembelajaranController;
 use App\Http\Controllers\SantriController;
 use App\Models\Guru;
 use App\Models\Santri;
@@ -41,6 +42,7 @@ Route::middleware('is-auth')->group(function () {
     Route::resource('/guru', GuruController::class);
     Route::resource('/santri', SantriController::class);
     Route::resource('/pembayaran', PembayaranController::class);
+    Route::resource('/pembelajaran', PembelajaranController::class);
 
     Route::get('/pembayaran/create/{santri_id}', [PembayaranController::class, 'create']);
 

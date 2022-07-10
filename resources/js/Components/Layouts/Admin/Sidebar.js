@@ -107,6 +107,16 @@ const Sidebar = (props) => {
                 ""
             )}
 
+            {auth.user ? (
+                <>
+                    <SinggleMenu title="Data Pembelejaran" link="/pembelajaran" fa="fa-calendar-check" />
+
+                    <hr className="sidebar-divider" />
+                </>
+            ) : (
+                ""
+            )}
+
             {/* <MultipleMenu /> */}
 
             {/* <hr className="sidebar-divider d-none d-md-block" /> */}
