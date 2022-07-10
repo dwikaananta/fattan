@@ -35,25 +35,29 @@ const Pembelejaran = (props) => {
                             {pembelajaran.data.map((p, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td className="text-center">
+                                        <td className="align-middle text-center">
                                             {index + pembelajaran.from}
                                         </td>
-                                        <td className="text-nowrap">
+                                        <td className="align-middle text-nowrap">
                                             {p.judul}
                                         </td>
-                                        <td className="text-nowrap">
+                                        <td className="align-middle text-nowrap">
                                             {p.tanggal}
                                         </td>
-                                        <td className="text-nowrap">
-                                            {p.foto}
+                                        <td className="align-middle text-nowrap text-center">
+                                            <img
+                                                src={`/storage/pembelajaran/${p.foto}`}
+                                                className="img-fluid"
+                                                style={{ maxWidth: "10%" }}
+                                            />
                                         </td>
-                                        <td className="text-nowrap">
+                                        <td className="align-middle text-nowrap">
                                             {p.isi.length > 49
                                                 ? p.isi.substring(0, 50) +
                                                   " . . . "
                                                 : p.isi}
                                         </td>
-                                        <td className="text-center text-nowrap">
+                                        <td className="align-middle text-center text-nowrap">
                                             {auth.user ? (
                                                 <Tbtn
                                                     show={`/pembelajaran/${p.id}`}
