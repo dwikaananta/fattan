@@ -18,38 +18,7 @@ const Pembelejaran = (props) => {
         <Main titleAdd="Tambah Data" linkAdd="/pembelajaran/create">
             {pembelajaran.data && pembelajaran.data.length > 0 ? (
                 <>
-                    {pembelajaran.data.map((p, index) => {
-                        return (
-                            <div className="row mb-3">
-                                <div className="col-3">
-                                    <img
-                                        src={`/storage/pembelajaran/${p.foto}`}
-                                        className="img-fluid"
-                                    />
-                                </div>
-                                <div className="col-9">
-                                    <h4 className="text-center">{p.judul}</h4>
-                                    <p className="m-0 p-0 text-primary">
-                                        {p.tanggal}
-                                    </p>
-                                    <p>
-                                        {p.isi.length > 400
-                                            ? p.isi.substring(0, 400) +
-                                              " . . . "
-                                            : p.isi}
-                                    </p>
-                                    <Link
-                                        href={`/pembelajaran/${p.id}`}
-                                        className="btn btn-sm btn-info"
-                                    >
-                                        Detail
-                                    </Link>
-                                </div>
-                            </div>
-                        );
-                    })}
-
-                    {/* <Table>
+                    <Table>
                         <Thead>
                             <tr>
                                 <th>No</th>
@@ -105,7 +74,7 @@ const Pembelejaran = (props) => {
                                 );
                             })}
                         </Tbody>
-                    </Table> */}
+                    </Table>
 
                     <Pagination
                         from={pembelajaran.from}

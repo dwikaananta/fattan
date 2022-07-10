@@ -107,15 +107,15 @@ const Sidebar = (props) => {
                 ""
             )}
 
-            {auth.user ? (
-                <>
-                    <SinggleMenu title="Data Pembelejaran" link="/pembelajaran" fa="fa-calendar-check" />
+            <>
+                <SinggleMenu
+                    title="Data Pembelejaran"
+                    link="/pembelajaran"
+                    fa="fa-calendar-check"
+                />
 
-                    <hr className="sidebar-divider" />
-                </>
-            ) : (
-                ""
-            )}
+                <hr className="sidebar-divider" />
+            </>
 
             {/* <MultipleMenu /> */}
 
