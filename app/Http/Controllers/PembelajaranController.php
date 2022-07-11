@@ -72,7 +72,6 @@ class PembelajaranController extends Controller
         $req->validate([
             'judul' => 'required',
             'tanggal' => 'required',
-            'foto' => 'mimes:jpg,jpeg,png',
             'isi' => 'required',
         ]);
 

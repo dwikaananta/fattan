@@ -15,7 +15,10 @@ const Pembelejaran = (props) => {
     const { auth } = usePage().props;
 
     return (
-        <Main titleAdd="Tambah Data" linkAdd="/pembelajaran/create">
+        <Main
+            titleAdd="Tambah Data"
+            linkAdd={auth.user ? "/pembelajaran/create" : false}
+        >
             {pembelajaran.data && pembelajaran.data.length > 0 ? (
                 <>
                     <Table>
